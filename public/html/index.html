@@ -37,7 +37,64 @@
             </ul>
         </header>
         <section class="title-wrapper">
-
+            <h2 class="title">Firebase를 활용한 한줄 게시판</h2>
+            <h3 class="title">Firebase Auth/DataBase/Storage</h3>
+        </section>
+        <section class="create-wrapper wrapper">
+            <form class="create-form form-inline" onsubmit="return onSubmit(this);">
+                <input type="text" name="writer" class="form-control" placeholder="작성자">
+                <input type="text" name="content" class="form-control" placeholder="한 줄 내용" autofocus>
+                <button class="btn btn-danger">등록</button>
+            </form>
+        </section>
+        <section class="list-wrapper wrapper">
+            <table class="table text-center table-hover border-bottom">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody><!-- import post -->
+                    <tr>
+                        <td>3</td>
+                        <td class="text-left">아버지를 아버지라...</td>
+                        <td>홍길동</td>
+                        <td>2021-05-14</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="text-left">아니 그게 아니고요 그게 어케된거냐면 말하자면 좀 복잡한데</td>
+                        <td>월매</td>
+                        <td>2021-05-14</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="text-left">아니 그게 아니고요 그게 어케된거냐면 말하자면 좀 복잡한데</td>
+                        <td>별주부</td>
+                        <td>2021-05-14</td>
+                        <td>7</td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav class="pager-wrapper">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link bi-chevron-bar-left" href="#"></a></li>
+					<li class="page-item"><a class="page-link bi-chevron-double-left" href="#"></a></li>
+					<li class="page-item"><a class="page-link bi-chevron-left" href="#"></a></li>
+					<li class="page-item active"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link bi-chevron-right" href="#"></a></li>
+					<li class="page-item"><a class="page-link bi-chevron-double-right" href="#"></a></li>
+					<li class="page-item"><a class="page-link bi-chevron-bar-right" href="#"></a></li>
+				</ul>
+			</nav>
         </section>
     </div>
     <script src="../js/index.js"></script>

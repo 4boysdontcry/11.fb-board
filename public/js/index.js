@@ -24,7 +24,7 @@ $('.bt-logout').click(onLogOut);
 
 /* ****************** 이벤트 콜백 ******************** */
 function onRemoved(){
-    
+
 }
 
 function onAdded(r){
@@ -43,7 +43,7 @@ function onAdded(r){
 }
 
 function onSubmit(f){
-    if(f.writer.value.trim()===''){
+    if(f.writer.value.trim()===''){     // trim : 문자열 양 끝의 공백을 없애줌
         alert('작성자는 필수사항 입니다.');
         f.writer.focus();
         return false;
@@ -73,7 +73,7 @@ function onSubmit(f){
 function onChangeAuth(r){
     user = r;
     console.log(r);
-    if(user) {
+    if(user) {      // user값(r값) 이 있다면
         $('.header-wrapper .email').text(user.email)
         $('.header-wrapper .photo img').attr('src', user.photoURL)
         $('.header-wrapper .info-wrap').css('display', 'flex');

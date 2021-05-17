@@ -20,6 +20,7 @@ db.ref('/root/board').on('child_added', onAdded);       // limitToLast(10): root
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
+// $(window).resize(onResize);       // 창이 열릴때 mask의 사이즈를 resize함
 
 
 /* ****************** 이벤트 콜백 ******************** */
@@ -32,24 +33,39 @@ function onAdded(r){
     var v = r.val();
     var i = $tbody.find('tr').length+1;
     var html = '';
-    html += '<tr id="'+k+'">';
+    html += '<tr id="'+k+'" data-uid = "'+v.uid+'">';
     html += '<td>'+i;
-    html += '<div class="mask-td">';        // 번호 안에 넣어서 absolute로 띄움
-    html += '<button class="btn btn-sm btn-success">수정</button>';
-    html += '<button class="btn btn-sm btn-danger">삭제</button>';
-    html += '<button class="btn btn-sm btn-primary">내용보기</button>';
-    html +='</div>';
     html +='</td>';
-    html += '<td class="text-left">'+v.content+'</td>';
+    html += '<td class="text-left">'+v.content;
+    html += '<div class="mask">';
+    html += '<div class="btn-group">';
+    html += '<button class="bt-chg btn btn-sm btn-info"><i class="bi-pencil-square"></i></button>';
+    html += '<button class="bt-rev btn btn-sm btn-danger"><i class="bi-trash"></i></button>';
+    html +='</div>';
+    html +='</div>';
+    html += '</td>';
     html += '<td>'+v.writer+'</td>';
     html += '<td>'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
     html += '<td>'+v.readnum+'</td>';
     html += '</tr>';
-    $tbody.prepend(html);
-    $(window).resize(function(){
-        var wid = $('.list-td').outerWidth();       // 그리고 테이블의 넓이값을 가져와서
-        $('.mask-td').innerWidth(wid);      // mask-td의 inner-width값으로 넣어주고
-    }).trigger('resize');       // resize할때마다 넓이 값을 조정
+    $(html).prependTo($tbody).mouseenter(onTrEnter).mouseleave(onTrLeave);
+    // $(window).trigger('resize');       // resize할때 mask의 넓이 값을 조정
+}
+
+function onTrEnter(){
+    var uid = $(this).data('uid');
+    if(user && uid === user.uid){
+        $(this).find('.mask').css('display', 'inline-block');
+    }
+}
+
+function onTrLeave(){
+    $(this).find('.mask').css('display', 'none');
+}
+
+function onResize(){
+    var wid = $('.list-td').outerWidth();       // 그리고 테이블의 넓이값을 가져와서
+    $('.list-td .mask').innerWidth(wid);      // mask의 inner-width값으로 넣어줌
 }
 
 function onSubmit(f){

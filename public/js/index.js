@@ -3,6 +3,8 @@ var auth = firebase.auth();     // firebase의 auth(인증)모듈을 불러온�
 var googleAuth = new firebase.auth.GoogleAuthProvider();        // firebase에서 제공하는 구글 로그인 모듈을 불러온다.
 var db = firebase.database();       // firebase의 database 모듈을 불러온다.
 var user = null;
+var page = 1;
+var pagerCnt = 3;       // 페이저의 개수
 
 var $tbody = $('.list-wrapper tbody')
 

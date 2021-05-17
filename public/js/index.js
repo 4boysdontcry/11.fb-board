@@ -3,8 +3,6 @@ var auth = firebase.auth();     // firebase의 auth(인증)모듈을 불러온�
 var googleAuth = new firebase.auth.GoogleAuthProvider();        // firebase에서 제공하는 구글 로그인 모듈을 불러온다.
 var db = firebase.database();       // firebase의 database 모듈을 불러온다.
 var user = null;
-var page = 1;
-var pagerCnt = 3;       // 페이저의 개수
 
 var $tbody = $('.list-wrapper tbody')
 
@@ -17,8 +15,8 @@ $tbody.empty();
 
 /* ****************** 이벤트 등록 ******************** */
 auth.onAuthStateChanged(onChangeAuth);
-db.ref('/root/board').on('child_added', onAdded);
-db.ref('/root/board').on('child_removed', onRemoved);
+db.ref('/root/board').on('child_added', onAdded);       // limitToLast(10): root안에 저장된 게시글들 중 최근 글 10개를 지정함
+// db.ref('/root/board').on('child_removed', onRemoved);
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
@@ -35,13 +33,23 @@ function onAdded(r){
     var i = $tbody.find('tr').length+1;
     var html = '';
     html += '<tr id="'+k+'">';
-    html += '<td>'+i+'</td>';
+    html += '<td>'+i;
+    html += '<div class="mask-td">';        // 번호 안에 넣어서 absolute로 띄움
+    html += '<button class="btn btn-sm btn-success">수정</button>';
+    html += '<button class="btn btn-sm btn-danger">삭제</button>';
+    html += '<button class="btn btn-sm btn-primary">내용보기</button>';
+    html +='</div>';
+    html +='</td>';
     html += '<td class="text-left">'+v.content+'</td>';
     html += '<td>'+v.writer+'</td>';
     html += '<td>'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
     html += '<td>'+v.readnum+'</td>';
     html += '</tr>';
     $tbody.prepend(html);
+    $(window).resize(function(){
+        var wid = $('.list-td').outerWidth();       // 그리고 테이블의 넓이값을 가져와서
+        $('.mask-td').innerWidth(wid);      // mask-td의 inner-width값으로 넣어주고
+    }).trigger('resize');       // resize할때마다 넓이 값을 조정
 }
 
 function onSubmit(f){

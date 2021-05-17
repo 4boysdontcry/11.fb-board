@@ -117,7 +117,7 @@ function onResize() {
 	$('.list-tb .mask').innerWidth(wid);        // mask의 innerwidth값을 table의 outerwidth값으로 맞춰준다.
 }
 
-function onSubmit(f) {
+function onSubmit(f) {      // f: create-form에 입력된 값을 받아옴
 	if(f.writer.value.trim() === '') {      // trim: 문자열 앞뒤의 공백을 없애준다.
 		alert('작성자는 필수사항 입니다.');
 		f.writer.focus();
@@ -130,10 +130,9 @@ function onSubmit(f) {
 		return false;
 	}
 
-
 	var data = { writer: f.writer.value, content: f.content.value }
 	if(user && user.uid) {
-		if(f.key.value === '') {
+		if(f.key.value === '') {        // key === '': 키값이 없다(새로 작성되는 글이다)
 			data.createdAt = new Date().getTime();
 			data.readnum = 0;
 			data.uid = user.uid;
@@ -146,11 +145,13 @@ function onSubmit(f) {
 	}
 	else alert('정상적인 접근이 아닙니다.');
 
-	$(f).removeClass('active');
+	$(f).removeClass('active');     // 수정 이후 create-form의 디자인 초기화
 	f.key.value = '';
 	f.writer.value = user.displayName;
 	f.content.value = '';
 	f.content.focus();
+    $form.find('.btn-group').hide();
+	$form.find('.bt-create').show();
 
 	return false;
 }

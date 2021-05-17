@@ -45,6 +45,8 @@ html, body {font-family: 'NanumBarunGothic';}
 .create-wrapper form {display: flex; align-items: center;}
 .create-wrapper form > input[name='content'] {flex-grow: 1; margin: 0 .5em;}
 .create-wrapper form .btn {padding: .375em 1.5em;}
+.create-wrapper form input {transition: all .5s;}
+.create-wrapper form.active input {border-color: #28a745; background-color: #fff7b3;}
 
 
 /* ****************** list-wrapper ******************** */

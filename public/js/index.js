@@ -5,6 +5,7 @@ var db = firebase.database();       // firebase의 database 모듈을 불러온�
 var user = null;
 
 var $tbody = $('.list-wrapper tbody')
+var $form = $('.create-form')
 
 
 
@@ -16,7 +17,8 @@ $tbody.empty();
 /* ****************** 이벤트 등록 ******************** */
 auth.onAuthStateChanged(onChangeAuth);
 db.ref('/root/board').on('child_added', onAdded);       // limitToLast(10): root안에 저장된 게시글들 중 최근 글 10개를 지정함
-// db.ref('/root/board').on('child_removed', onRemoved);
+db.ref('/root/board').on('child_removed', onRemoved);
+db.ref('/root/board').on('child_Changed', onChanged);
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
@@ -24,8 +26,12 @@ $('.bt-logout').click(onLogOut);
 
 
 /* ****************** 이벤트 콜백 ******************** */
-function onRemoved(){
+function onRemoved(r){
+    $('#'+r.key).remove();
+}
 
+function onChanged(r){
+    console.log(r)
 }
 
 function onAdded(r){
@@ -56,11 +62,25 @@ function onAdded(r){
 }
 
 function onChgClick(){
-    console.log($(this).parents('tr').attr('id') );
+    var key = $(this).parents('tr').attr('id');
+    $('.create-form').find('[name="key"]').val(key);
+    $form.find('.bt-create').hide();
+    $form.find('.btn-group').show();
 }
 
 function onRevClick(){
-
+    if(confirm('정말로 삭제하시겠습니까?')){
+        var key = $(this).parents('tr').attr('id');
+        db.ref('root/board/' + key).remove();
+        /* 
+        삭제로직
+        1. db.ref('root/board/' + key).remove();        // firebase remove()
+        2. db.ref('root/board/').on('child_removed',onRemoved);     // 실제 데이터가 삭제되면 이벤트 실행
+        3. function onRemoved(r){       // r: 삭제된 데이터
+            $('#',+r.key).remove();     // jQuery remove()
+        }
+        */
+    }
 }
 
 function onTrEnter(){

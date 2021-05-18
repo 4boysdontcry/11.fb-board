@@ -7,16 +7,16 @@ var user = null;
 
 // paging
 var observer;
-var listcnt = 10;
+var listCnt = 10;
+
 
 var $tbody = $('.list-wrapper tbody');
 var $form = $('.create-form');
 
 
 /*************** 사용자 함수 *****************/
-observer = new IntersectionObserver(onIntersection, {root: null});
+observer = new IntersectionObserver(onIntersection, { root: null });
 $tbody.empty();
-
 
 
 /*************** 이벤트 등록 *****************/
@@ -62,19 +62,20 @@ function onAdded(r) {
 	html += '<td class="readnum">'+v.readnum+'</td>';
 	html += '</tr>';
 	var $tr = $(html).prependTo($tbody);
-    observer.observe($tbody.find('tr:last-child')[0]);
+	observer.observe($tbody.find('tr:last-child')[0]);
 	$tr.mouseenter(onTrEnter)
 	$tr.mouseleave(onTrLeave);
 	$tr.find('.bt-chg').click(onChgClick);
 	$tr.find('.bt-rev').click(onRevClick);
 }
 
-function onIntersection(els, observer){
-    els.forEach(function(v){
-        if(v.isIntersecting){
-            observer.unobserve(v.target);
-        }
-    })
+function onIntersection(els, observer) {
+	els.forEach(function(v) {
+		if(v.isIntersecting) {
+			console.log('hi', v.target);
+			observer.unobserve(v.target);
+		}
+	})
 }
 
 function onChgClick() {
@@ -128,11 +129,11 @@ function onTrLeave() {
 
 function onResize() {
 	var wid = $('.list-tb').innerWidth();
-	$('.list-tb .mask').innerWidth(wid);        // mask의 innerwidth값을 table의 outerwidth값으로 맞춰준다.
+	$('.list-tb .mask').innerWidth(wid);
 }
 
-function onSubmit(f) {      // f: create-form에 입력된 값을 받아옴
-	if(f.writer.value.trim() === '') {      // trim: 문자열 앞뒤의 공백을 없애준다.
+function onSubmit(f) {
+	if(f.writer.value.trim() === '') {		// trim : 문자열 양 끝의 공백을 없애줌
 		alert('작성자는 필수사항 입니다.');
 		f.writer.focus();
 		return false;
@@ -144,14 +145,15 @@ function onSubmit(f) {      // f: create-form에 입력된 값을 받아옴
 		return false;
 	}
 
+
 	var data = { writer: f.writer.value, content: f.content.value }
 	if(user && user.uid) {
-		if(f.key.value === '') {        // key === '': 키값이 없다(새로 작성되는 글이다)
+		if(f.key.value === '') {
 			data.createdAt = new Date().getTime();
 			data.readnum = 0;
 			data.uid = user.uid;
 			data.sort = -data.createdAt;
-			ref.push(data);     // user값과 uid가 있다면 data를 보내준다. 
+			ref.push(data);
 		}
 		else {
 			data.updatedAt = new Date().getTime();
@@ -160,12 +162,12 @@ function onSubmit(f) {      // f: create-form에 입력된 값을 받아옴
 	}
 	else alert('정상적인 접근이 아닙니다.');
 
-	$(f).removeClass('active');     // 수정 이후 create-form의 디자인 초기화
+	$(f).removeClass('active');
 	f.key.value = '';
 	f.writer.value = user.displayName;
 	f.content.value = '';
 	f.content.focus();
-    $form.find('.btn-group').hide();
+	$form.find('.btn-group').hide();
 	$form.find('.bt-create').show();
 
 	return false;
@@ -174,7 +176,7 @@ function onSubmit(f) {      // f: create-form에 입력된 값을 받아옴
 function onChangeAuth(r) {
 	user = r;
 	console.log(user);
-	if(user) {
+	if(user) {		// user값(r값) 이 있다면
 		$('.header-wrapper .email').text(user.email);
 		$('.header-wrapper .photo img').attr('src', user.photoURL);
 		$('.header-wrapper .info-wrap').css('display', 'flex');

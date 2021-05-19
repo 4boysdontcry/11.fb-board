@@ -1,3 +1,7 @@
+/* 
+javascript는 비동기이다. = 이거 실행해 하고 바로 다음 것을 읽어들이며 실행한다. 즉, 함수의 순서가 중요함.
+*/
+
 /*************** 글로벌 설정 *****************/
 var auth = firebase.auth();	//firebase의 auth(인증)모듈을 불러온다.
 var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모듈을 불러온다.
@@ -15,8 +19,7 @@ var $form = $('.create-form');
 
 
 /*************** 사용자 함수 *****************/
-function genHTML(k, v, method) {
-    
+function genHTML(k, v, method) {		// 새 게시글이 작성되면 그것을 table에 붙여준다.
 	var html = '';
 	html += '<tr class="id" id="'+k+'" data-uid="'+v.uid+'" data-sort="'+v.sort+'">';
 	html += '<td>'+num;
@@ -33,12 +36,12 @@ function genHTML(k, v, method) {
 	html += '</tr>';
 	var $tr = (method && method == 'append') ? $(html).appendTo($tbody) : $(html).prependTo($tbody);
 
-    var num = $tbody.find('tr').length
-    $tbody.find('tr').each(function(i){
-        $(this).find('td:first-child').text(num--);
+    var num = $tbody.find('tr').length		// num은 tr의 length (페이지 번호)
+    $tbody.find('tr').each(function(i){		// 각각의 tr을 돌면서
+        $(this).find('td:first-child').text(num--);		// tr안의 td에 num에서 1을 뺀 수를 붙여줌
     })
 
-	setTimeout(function(){ $tr.addClass('active'); }, 100);
+	setTimeout(function(){ $tr.addClass('active'); }, 100);		// tr이 나타날때 0.1초 동안 딜레이되며 active의 효과를 보여줌
 	$tr.mouseenter(onTrEnter);
 	$tr.mouseleave(onTrLeave);
 	$tr.find('.bt-chg').click(onChgClick);
@@ -66,7 +69,7 @@ $form.find('.bt-cancel').click(onReset);
 
 /*************** 이벤트 콜백 *****************/
 function onRemoved(r) {
-	$('#'+r.key).remove();
+	$('#'+r.key).remove();		// key값은 작성한 게시글의 내용 전부를 담고있는 난수로 표현된 큰 타이틀임
 }
 
 function onChanged(r) {
@@ -193,7 +196,7 @@ function onSubmit(f) {
 	return false;
 }
 
-function onChangeAuth(r) {
+function onChangeAuth(r) {	// r은 함수를 호출하는< auth.onAuthStateChanged(onChangeAuth); >구문에서 함수에 전달되는 값을 받아주는 인자(이름은 알아서 정한다).
 	user = r;
 	console.log(user);
 	if(user) {		// user값(r값) 이 있다면

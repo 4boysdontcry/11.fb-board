@@ -18,20 +18,20 @@ var $pager = $('.pager-wrapper').find('.pagination');
 
 /*************** 사용자 함수 *****************/
 function genPager(r) {
-	var startIdx = (page - 1) * listCnt;
+	var startIdx = (page - 1) * listCnt;		// page는 전역변수에서 선언되어 있음
 	// var startIdx = (page == 1) ? null : $tbody.find('tr:last-child').data('sort');
 	ref.get().then(function(r) {
 		$tbody.empty();
 		var temp = [];
-		r.forEach(function(v) { temp.unshift(v) });
+		r.forEach(function(v) { temp.unshift(v) });		// v(value)를 배열로 만들어줌.
 		for(var i=startIdx; i<startIdx+listCnt; i++) {
 			genHTML(temp[i].key, temp[i].val(), 'append');
 		}
 	});
 	if(r) totalRecord = r.numChildren();
-	var totalPage = Math.ceil(totalRecord / listCnt);
+	var totalPage = Math.ceil(totalRecord / listCnt);		// 소수점 자리를 반올림해서 정수로 표현<모든 게시글 수를 페이지 당 나올 게시글 수로 나눈 값 = 페이지 수>
 	var startIdx = (page - 1) * listCnt;
-	var startPage = Math.floor((page - 1) / pagerCnt) * pagerCnt + 1;
+	var startPage = Math.floor((page - 1) / pagerCnt) * pagerCnt + 1;		// 소수점 자리를 버리고 정수로 표현
 	var endPage = (startPage + pagerCnt - 1 > totalPage) ? totalPage : startPage + pagerCnt - 1;
 	var nextPage = (page + 1 > totalPage) ? totalPage : page + 1;
 	var prevPage = (page - 1 < 1) ? 1 : page - 1;
@@ -214,8 +214,8 @@ function onSubmit(f) {
 
 
 	var data = { writer: f.writer.value, content: f.content.value }
-	if(user && user.uid) {
-		if(f.key.value === '') {
+	if(user && user.uid) {		// user와 user의 uid가 있다면	- 게시글을 새로 작성하는 경우
+		if(f.key.value === '') {		// key의 value가 빈 문자열이라면
 			data.createdAt = new Date().getTime();
 			data.readnum = 0;
 			data.uid = user.uid;
@@ -224,7 +224,7 @@ function onSubmit(f) {
 			page = 1;
 			genPager();
 		}
-		else {
+		else {		// 기존의 게시글을 수정하는경우
 			data.updatedAt = new Date().getTime();
 			ref.child(f.key.value).update(data);
 		}

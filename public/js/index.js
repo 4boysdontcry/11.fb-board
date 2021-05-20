@@ -1,7 +1,3 @@
-/* 
-javascript는 비동기이다. = 이거 실행해 하고 바로 다음 것을 읽어들이며 실행한다. 즉, 함수의 순서가 중요함.
-*/
-
 /*************** 글로벌 설정 *****************/
 var auth = firebase.auth();	//firebase의 auth(인증)모듈을 불러온다.
 var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모듈을 불러온다.
@@ -11,7 +7,7 @@ var user = null;
 
 // paging
 var observer;
-var listCnt = 5;
+var listCnt = 10;
 
 
 var $tbody = $('.list-wrapper tbody');
@@ -19,10 +15,10 @@ var $form = $('.create-form');
 
 
 /*************** 사용자 함수 *****************/
-function genHTML(k, v, method) {		// 새 게시글이 작성되면 그것을 table에 붙여준다.
+function genHTML(k, v, method) {
 	var html = '';
 	html += '<tr class="id" id="'+k+'" data-uid="'+v.uid+'" data-sort="'+v.sort+'">';
-	html += '<td>'+num;
+	html += '<td>&nbsp;';
 	html += '</td>';
 	html += '<td class="content text-left"><span>'+v.content+'</span>';
 	html += '<div class="btn-group mask">';
@@ -36,12 +32,12 @@ function genHTML(k, v, method) {		// 새 게시글이 작성되면 그것을 tab
 	html += '</tr>';
 	var $tr = (method && method == 'append') ? $(html).appendTo($tbody) : $(html).prependTo($tbody);
 
-    var num = $tbody.find('tr').length		// num은 tr의 length (페이지 번호)
-    $tbody.find('tr').each(function(i){		// 각각의 tr을 돌면서
-        $(this).find('td:first-child').text(num--);		// tr안의 td에 num에서 1을 뺀 수를 붙여줌
-    })
+	var num = $tbody.find('tr').length;
+	$tbody.find('tr').each(function(i) {
+		$(this).find('td:first-child').text(num--);
+	});
 
-	setTimeout(function(){ $tr.addClass('active'); }, 100);		// tr이 나타날때 0.1초 동안 딜레이되며 active의 효과를 보여줌
+	setTimeout(function(){ $tr.addClass('active'); }, 100);
 	$tr.mouseenter(onTrEnter);
 	$tr.mouseleave(onTrLeave);
 	$tr.find('.bt-chg').click(onChgClick);
@@ -69,7 +65,7 @@ $form.find('.bt-cancel').click(onReset);
 
 /*************** 이벤트 콜백 *****************/
 function onRemoved(r) {
-	$('#'+r.key).remove();		// key값은 작성한 게시글의 내용 전부를 담고있는 난수로 표현된 큰 타이틀임
+	$('#'+r.key).remove();
 }
 
 function onChanged(r) {
@@ -88,6 +84,7 @@ function onAdded(r) {
 
 function onIntersection(entries, observer) {
 	entries.forEach(function(v) {
+		console.log(v.isIntersecting);
 		if(v.isIntersecting) {
 			var key = $tbody.find('tr:last-child').data('sort');
 			ref.orderByChild('sort').startAfter(key).limitToFirst(listCnt).get().then(function(r) {
@@ -95,7 +92,7 @@ function onIntersection(entries, observer) {
 					genHTML(v.key, v.val(), 'append');
 				});
 				observer.observe($tbody.find('tr:last-child')[0]);
-                observer.unobserve(v.target);
+				observer.unobserve(v.target);
 			});
 		}
 	});
@@ -156,7 +153,7 @@ function onResize() {
 }
 
 function onSubmit(f) {
-	if(f.writer.value.trim() === '') {		// trim : 문자열 양 끝의 공백을 없애줌
+	if(f.writer.value.trim() === '') {
 		alert('작성자는 필수사항 입니다.');
 		f.writer.focus();
 		return false;
@@ -196,10 +193,9 @@ function onSubmit(f) {
 	return false;
 }
 
-function onChangeAuth(r) {	// r은 함수를 호출하는< auth.onAuthStateChanged(onChangeAuth); >구문에서 함수에 전달되는 값을 받아주는 인자(이름은 알아서 정한다).
+function onChangeAuth(r) {
 	user = r;
-	console.log(user);
-	if(user) {		// user값(r값) 이 있다면
+	if(user) {
 		$('.header-wrapper .email').text(user.email);
 		$('.header-wrapper .photo img').attr('src', user.photoURL);
 		$('.header-wrapper .info-wrap').css('display', 'flex');

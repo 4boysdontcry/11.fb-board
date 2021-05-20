@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/talk.css">
+    <script src="/__/firebase/8.6.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.6.1/firebase-auth.js"></script>
+    <script src="/__/firebase/8.6.1/firebase-database.js"></script>
+    <script src="/__/firebase/8.6.1/firebase-storage.js"></script>
+    <script src="/__/firebase/8.6.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.6.1/firebase-performance.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../js/lodash.min.js"></script>
+    <script src="../js/moment.min.js"></script>
+    <script src="../js/minified.js"></script>
+</head>
+<body>
+    <div class="container-wrapper">
+        <header class="header-wrapper">
+            <h1 class="logo">
+                <i class="bi-journal-text"></i>
+                <li class="info-wrap">
+                    <div class="photo">
+                        <img src="//via.placeholder.com/1x1/333" alt="포토" class="w-100">
+                    </div>
+                </li>
+            </h1>
+            <ul class="navi-wrap">
+                <li class="navi"><a href="./index.html">Infinite<br> Board</a></li>
+                <li class="navi"><a href="./index-pager.html">Pager<br> Board</a></li>
+                <li class="navi bt-login"><i class="fab fa-google"></i> </li>
+                <li class="navi bt-logout"><i class="fa fa-sign-out-alt"></i> </li>
+            </ul>
+        </header>
+        <section class="title-wrapper">
+            <h2 class="title">Firebase를 활용한 채팅앱</h2>
+            <h3 class="title">Firebase Auth/DataBase/Intersection Observer</h3>
+        </section>
+        <section class="list-wrapper wrapper">
+            <div class="talk-wrapper">
+                <div class="talk-wrap">
+                    <div class="icon">
+                        <img src="//via.placeholder.com/1x1/f5cd98c2" alt="icon">
+                    </div>
+                    <div class="writer">henry</div>
+                    <div class="content-wrap">
+                        <i class="fa fa-caret-left"></i>
+                        <div class="content">나오나?</div>
+                    </div>
+                    <div class="date">pm 3:14</div>
+                </div>
+            </div>
+        </section>
+        <section class="gap-wrapper"></section>
+        <section class="create-wrapper wrapper">
+            <form class="create-form form-inline" onsubmit="return onSubmit(this);">
+                <input type="text" name="writer" class="form-control" placeholder="작성자" readonly disabled>
+                <input type="text" name="content" class="form-control" placeholder="대화 입력" autofocus>
+                <button class="bt-create btn btn-danger">전송</button>
+            </form>
+        </section>
+        <!-- <nav class="pager-wrapper">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link bi-chevron-bar-left" href="#"></a></li>
+                <li class="page-item"><a class="page-link bi-chevron-double-left" href="#"></a></li>
+                <li class="page-item"><a class="page-link bi-chevron-left" href="#"></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link bi-chevron-right" href="#"></a></li>
+                <li class="page-item"><a class="page-link bi-chevron-double-right" href="#"></a></li>
+                <li class="page-item"><a class="page-link bi-chevron-bar-right" href="#"></a></li>
+            </ul>
+        </nav> -->
+    </div>
+    <script src="../js/talk.js"></script>
+</body>
+</html>

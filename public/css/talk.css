@@ -7,7 +7,7 @@
 html, body {font-family: 'NanumBarunGothic';}
 
 .wrapper {max-width: 1168px; margin: 0 auto;}
-
+.container-wrapper {height: 100vh; display: flex; flex-direction: column; justify-content: stretch; align-items: center;}
 
 /* ****************** pagination.custom ******************** */
 .pagination {justify-content: center;}
@@ -16,17 +16,19 @@ html, body {font-family: 'NanumBarunGothic';}
 
 
 /* ****************** header-wrapper ******************** */
-.header-wrapper {font-family: 'Noto Serif', serif; display: flex; align-items: center; background-color: #a078f7; color: #fff;}
+.header-wrapper {width: 100%; font-family: 'Noto Serif', serif; display: flex; align-items: center; background-color: #ffb759; color: #fff;}
 .header-wrapper .logo {font-size: 1.75em; padding-left: .5em; display: flex; align-items: center;}
-.header-wrapper .logo::after {content: 'FIREBASE CHAT'; display: inline-block;}
+.header-wrapper .logo::after {content: 'FIREBASE TALK'; display: inline-block;}
 .header-wrapper .logo i {font-size: .875em; margin-right: .5em;}
-
+.header-wrapper br {display: none;}
 .header-wrapper .navi-wrap {margin-left: auto; display: flex; font-family: 'NanumBarunGothic';}
-.header-wrapper .navi-wrap .navi {padding: 1.5em; cursor: pointer;}
+.header-wrapper .navi-wrap .navi {padding: 1.5em; cursor: pointer; flex-shrink: 1;}
 .header-wrapper .navi-wrap .navi:hover {background-color: crimson;}
+
+.header-wrapper .navi-wrap .navi.bt-login {align-items: center;}
+.header-wrapper .navi-wrap .navi.bt-logout {display: none; align-items: center;}
 .header-wrapper .navi-wrap .navi.bt-login:hover {background-color: darkcyan;}
 .header-wrapper .navi-wrap .navi.bt-logout:hover {background-color: crimson;}
-.header-wrapper .navi-wrap .navi.bt-logout {display: none;}
 .header-wrapper .navi-wrap .navi.bt-login::after {content: 'login'; display: inline-block;}
 .header-wrapper .navi-wrap .navi.bt-logout::after {content: 'logout'; display: inline-block;}
 
@@ -40,25 +42,24 @@ html, body {font-family: 'NanumBarunGothic';}
 .title-wrapper h3.title {font-size: 1.125em; color: #999;}
 
 
+/* ****************** list-wrapper ******************** */
+.list-wrapper {flex-grow: 1; width: 96%; border: 2px solid #333; background-color: #f5cd98c2; border-radius: 8px;}
+
+
+
+.gap-wrapper {height: .5em;}
+
+
 /* ****************** create-wrapper ******************** */
-.create-wrapper {padding: .5em 0; border-top: 2px solid #343a40; display: none;}
-.create-wrapper form {display: flex; align-items: center;}
-.create-wrapper form > input[name='content'] {flex-grow: 1; margin: 0 .5em;}
-.create-wrapper form .btn {padding: .375em 1.5em;}
+.create-wrapper {padding: .5em 0; display: none; width: 96%;}
+.create-wrapper form {display: flex; align-items: center; flex-wrap: nowrap;}
+.create-wrapper form > input[name='content'] {flex-grow: 1; margin: .5em; min-width: 50%;}
+.create-wrapper form .btn {padding: .375em 1.5em; flex-shrink: 0;}
 .create-wrapper form input {transition: all .5s;}
 .create-wrapper form.active input {border-color: #28a745; background-color: #fff7b3;}
 
 
-/* ****************** list-wrapper ******************** */
-.list-wrapper {}
-.list-wrapper table {margin-bottom: 2em;}
-.list-wrapper table > thead > tr > :nth-child(1) {width: 10%;}
-.list-wrapper table > thead > tr > :nth-child(3) {width: 15%;}
-.list-wrapper table > thead > tr > :nth-child(4) {width: 20%;}
-.list-wrapper table > thead > tr > :nth-child(5) {width: 10%;}
-.list-wrapper table > tbody .mask {display: none; margin-top: -8px; margin-left: 2em; position: absolute;}
-.list-wrapper table > tbody > tr > td {opacity: 0; transition: all 3s;}
-.list-wrapper table > tbody > tr.active > td {opacity: 1;}
+
 
 
 
@@ -79,7 +80,7 @@ html, body {font-family: 'NanumBarunGothic';}
 }
 
 @media (max-width: 767px) {
-    .header-wrapper .logo::after {content: 'FB BOARD'; letter-spacing: -2px;}
+    .header-wrapper .logo::after {content: 'FB TALK'; letter-spacing: -2px;}
     .header-wrapper .email {display: none;}
     .header-wrapper .navi-wrap .navi.bt-login::after {content: '';}
     .header-wrapper .navi-wrap .navi.bt-logout::after {content: '';}
@@ -91,9 +92,12 @@ html, body {font-family: 'NanumBarunGothic';}
 }
 
 @media (max-width: 575px) {
+    .title-wrapper {padding: 2em 0 1.5em 0;}
     .title-wrapper h2.title {font-size: 1.25em;}
+    .header-wrapper .navi-wrap .navi.navi.bt-login {padding: 1em;}
+    .header-wrapper .navi-wrap .navi.navi.bt-logout {padding: 1em;}
     .header-wrapper .navi-wrap .navi {padding: 1em .5em;}
     .create-wrapper form > input {margin: .25em 0;}
-    .create-wrapper form > input[name='content'] {margin: 0 0 .5em 0;}
+    .header-wrapper br {display: block;}
     .create-wrapper form > .btn {margin: auto;}
 }

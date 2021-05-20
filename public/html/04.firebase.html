@@ -9,21 +9,24 @@
 <script src="../js/lodash.min.js"></script>
 <script src="../js/moment.min.js"></script>
 <script>
-  /* 
-  firvbase method
-  var db = firebase.database();
-  var ref = db.ref('root/board');
-  */
-  var db = firebase.database();
-  var ref = db.ref('root/board');
+/* 
+firebase method
+var db = firebase.database();
+var ref = db.ref('root/board');
+*/
+var db = firebase.database();
+var ref = db.ref('root/board');
 
-  ref.on('child_added', function(){});
-  ref.on('child_removed', function(){});
-  ref.on('child_changed', function(){});
+ref.on('child_added', function(){});
+ref.on('child_removed', function(){});
+ref.on('child_changed', function(){});
 
-  ref.once('value').then(function(){}).catch(function(){});   // READ(데이터를 가져옴)
-  ref.push({});   // Create(데이터 생성)
-  ref.set({}, function(){});   // Create(데이터 생성하고 나서, 함수 실행)
-  ref.child('-Mdh32i8ur8hd2jd829hhf').remove();   // Delete(ref에 있는 -M어쩌구라는 데이터를 삭제)
-  ref.update({});   // Update(데이터 수정)
+console.log(ref.once('value'));
+/*
+.then(function(){}).catch(function(){}); // READ
+ref.push({});  // Create
+ref.set({}, function(){});  // Create
+ref.child('-M2sadkjf23sda9fi8asdf').remove();  // Delete
+ref.child('-M2sadkjf23sda9fi8asdf').update({});  // Update
+*/
 </script>

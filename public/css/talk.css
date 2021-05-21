@@ -22,12 +22,13 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 .header-wrapper .logo::after {content: 'FIREBASE TALK'; display: inline-block;}
 .header-wrapper .logo i {font-size: .875em; margin-right: .5em;}
 .header-wrapper .navi-wrap {margin-left: auto; display: flex; font-family: 'NanumBarunGothic', sans-serif;}
-.header-wrapper .navi-wrap .navi {padding: 1.5em; cursor: pointer; flex-shrink: 1;}
+.header-wrapper .navi-wrap .navi {cursor: pointer; flex-shrink: 1;}
 .header-wrapper .navi-wrap .navi:hover {background-color: crimson;}
-.header-wrapper .navi-wrap .navi.bt-login {align-items: center;}
+.header-wrapper .navi-wrap .navi a {display: inline-block; padding: 1.5em;}
+.header-wrapper .navi-wrap .navi.bt-login {align-items: center; padding: 1.5em;}
 .header-wrapper .navi-wrap .navi.bt-login i {margin-right: .25em;}
 .header-wrapper .navi-wrap .navi.bt-logout i {margin-right: .25em;}
-.header-wrapper .navi-wrap .navi.bt-logout {display: none; align-items: center;}
+.header-wrapper .navi-wrap .navi.bt-logout {display: none; align-items: center; padding: 1.5em;}
 .header-wrapper .navi-wrap .bt-login::after {content: 'LOGIN'; display: inline-block;}
 .header-wrapper .navi-wrap .bt-logout::after {content: 'LOGOUT'; display: inline-block;}
 
@@ -42,10 +43,11 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** chat-wrapper *********************/
-.chat-wrapper {display: none; flex-direction: column; justify-content: stretch; align-items: center; flex-grow: 1; width: 100%;}
+.chat-wrapper {display: none; flex-direction: column; align-items: center; width: 100%;  overflow: hidden; justify-content: stretch; flex-grow: 1;}
 
 
 /********************** create-wrapper *********************/
+.chat-wrapper .bt-out-wrap {align-self: flex-end; margin-bottom: .5em;}
 .chat-wrapper .create-wrapper {padding: .5em 0; width: 96%;}
 .chat-wrapper .create-wrapper form {display: flex; align-items: center; flex-wrap: nowrap;}
 .chat-wrapper .create-wrapper .icon {border-radius: 50%; overflow: hidden; width: 36px; height: 36px; border: 1px solid #eee; flex-shrink: 0;} 
@@ -56,13 +58,11 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** list-wrapper *********************/
-.chat-wrapper .list-wrapper {flex-grow: 1; width: 96%; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em;
-    overflow-y: auto;}
+.chat-wrapper .list-wrapper {width: 96%; flex-grow: 1; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em; overflow-y: auto;}
 .chat-wrapper .list-wrapper .line {display: flex; align-items: center; margin: 2em 0; color: #555;}
 .chat-wrapper .list-wrapper .line > span {padding: 0 .5em;}
 .chat-wrapper .list-wrapper .line::before {display: block; content: ''; height: 2px; background-color: #999; flex-grow: 1;}
 .chat-wrapper .list-wrapper .line::after {display: block; content: ''; height: 2px; background-color: #999; flex-grow: 1;}
-
 .chat-wrapper .talk-wrapper {display: flex;}
 .chat-wrapper .talk-wrapper .left {display: inline-block;}
 .chat-wrapper .talk-wrapper .right {display: none;}
@@ -92,8 +92,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 .room-wrapper {display: none; flex-grow: 1; width: 100%; padding: 1em; align-items: stretch; flex-wrap: wrap; align-content: flex-start; overflow-y: auto;}
 .room-wrapper ::placeholder {color: #ddd;}
 .room-wrapper .room-wrap {width: 23%; margin: 1%; padding: 1em; border: 3px solid pink; background-color: #fdebee; border-radius: 10px;}
-
-.room-wrapper .room-wrap h3.title {text-align: center; margin: .325em 0 .75em 0; font-size: 1.25em; color: #a0368e;}
+.room-wrapper .room-wrap h3.title {text-align: center; margin: .325em 0 .75em 0; font-size: 1.325em; font-weight: bold; color:#5c2452;}
 .room-wrapper .room-wrap h3.name {font-size: 1.325em; font-weight: bold; margin-bottom: .5em; text-decoration: underline;}
 .room-wrapper .room-wrap h4.writer {font-size: 1.125em; margin-bottom: .5em;}
 .room-wrapper .room-wrap .date {color: #777; margin-bottom: .5em;}
@@ -103,12 +102,10 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 .room-wrapper .room-wrap.create {background-color: #ddd; border: 3px solid #a0a0a0;}
 .room-wrapper .room-wrap.secure {background-color: #c5afe9; border: 3px solid #a55fa9;}
 
-
-
 .room-wrapper .create input {padding: .125em .5em; font-size: .875em}
 .room-wrapper .create > div {margin-bottom: .25em;}
 .room-wrapper .create > div.writer {display: flex; justify-content: space-between;}
-.room-wrapper .create > div > .text-danger {margin: .25em 0 .5em 0;}
+.room-wrapper .create > div > .text-danger {margin: .325em 0 .625em 0; font-size: .875em;}
 .room-wrapper .create > div.btn-wrap {text-align: center;}
 .room-wrapper .form-inline input {width: 49%;}
 
@@ -128,7 +125,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 @media (max-width: 1199px) {
 	.wrapper {margin: 0 1em;}
 	.chat-wrapper .talk-wrapper .talk-wrap {max-width: 50%;}
-    .room-wrapper .room-wrap {width: 31.3333%;}
+	.room-wrapper .room-wrap {width: 31.3333%;}
 }
 
 @media (max-width: 991px) {
@@ -141,7 +138,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 	.header-wrapper .navi-wrap .bt-login::after {content: '';}
 	.header-wrapper .navi-wrap .bt-logout::after {content: '';}
 	.chat-wrapper .talk-wrapper .talk-wrap {max-width: 90%;}
-    .room-wrapper .room-wrap {width: 48%;}
+	.room-wrapper .room-wrap {width: 48%;}
 }
 
 @media (max-width: 575px) {
@@ -153,5 +150,5 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 	.header-wrapper br {display: block;}
 	.chat-wrapper .create-wrapper form > .btn {margin: auto;}
 	.chat-wrapper .talk-wrapper .talk-wrap {max-width: 100%;}
-    .room-wrapper .room-wrap {width: 98%;}
+	.room-wrapper .room-wrap {width: 98%;}
 }

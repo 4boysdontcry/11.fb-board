@@ -17,17 +17,18 @@ html, body {font-family: 'NanumBarunGothic';}
 
 
 /* ****************** header-wrapper ******************** */
-.header-wrapper {font-family: 'Noto Serif', serif; display: flex; align-items: center; background-color: #57dc67; color: #fff;}
+.header-wrapper {font-family: 'Noto Serif', serif; display: flex; align-items: center; background-color: #395a75; color: #fff;}
 .header-wrapper .logo {font-size: 1.75em; padding-left: .5em; display: flex; align-items: center;}
 .header-wrapper .logo::after {content: 'FIREBASE BOARD'; display: inline-block;}
 .header-wrapper .logo i {font-size: .875em; margin-right: .5em;}
 
 .header-wrapper .navi-wrap {margin-left: auto; display: flex; font-family: 'NanumBarunGothic';}
-.header-wrapper .navi-wrap .navi {padding: 1.5em; cursor: pointer;}
+.header-wrapper .navi-wrap .navi {cursor: pointer; flex-shrink: 1;}
+.header-wrapper .navi-wrap .navi a {display: inline-block; padding: 1.5em;}
 .header-wrapper .navi-wrap .navi:hover {background-color: crimson;}
 
-.header-wrapper .navi-wrap .navi.bt-login {align-items: center;}
-.header-wrapper .navi-wrap .navi.bt-logout {display: none; align-items: center;}
+.header-wrapper .navi-wrap .navi.bt-login {align-items: center; padding: 1.5em;}
+.header-wrapper .navi-wrap .navi.bt-logout {display: none; align-items: center; padding: 1.5em;}
 .header-wrapper .navi-wrap .navi.bt-login:hover {background-color: darkcyan;}
 .header-wrapper .navi-wrap .navi.bt-logout:hover {background-color: crimson;}
 .header-wrapper .navi-wrap .navi.bt-login::after {content: 'login'; display: inline-block;}

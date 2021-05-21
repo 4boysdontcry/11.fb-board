@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,6 +25,7 @@
     <script src="../js/minified.js"></script>
     <script src="../js/util.js"></script>
 </head>
+
 <body>
     <div class="container-wrapper">
         <header class="header-wrapper">
@@ -47,10 +49,10 @@
             <h3 class="title">Firebase Auth/DataBase/Intersection Observer</h3>
         </section>
         <section class="login-wrapper">
-                <button class="btn btn-danger bt-login">
-                    <i class="fab fa-google"></i> 로그인
-                </button>
-                <div>로그인 후 이용 가능합니다.</div>
+            <button class="btn btn-danger bt-login">
+                <i class="fab fa-google"></i> 로그인
+            </button>
+            <div>로그인 후 이용 가능합니다.</div>
         </section>
         <section class="room-wrapper">
             <form class="room-wrap create" onsubmit="return onRoomSubmit(this)">
@@ -61,7 +63,8 @@
                 <div class="writer form-inline">
                     <input type="text" class="form-control" name="writer" placeholder="개설자">
                     <input type="password" class="form-control" name="roompw" placeholder="비밀번호">
-                    <div class="text-danger">* 비밀번호 입력시 비밀방이 됩니다.<br>*(미입력시 오픈채팅)</div>
+                    <div class="text-danger">* 비밀번호 입력시 비밀방이 됩니다.<br>
+                        *(미입력시 오픈채팅)</div>
                 </div>
                 <div class="btn-wrap">
                     <button class="btn btn-sm btn-primary"><i class="bt-update fa fa-save"></i>저장</button>
@@ -69,7 +72,13 @@
             </form>
         </section>
         <section class="chat-wrapper">
-            <section class="list-wrapper wrapper"><!-- data import --></section>
+            <div class="bt-out-wrap wrapper">
+                <button class="btn btn-sm btn-danger bt-out" onclick="onChatOut()">
+                    <i class="fa fa-sign-out-alt"></i>
+                    채팅방 나가기
+                </button>
+            </div>
+            <section class="list-wrapper wrapper"></section>
             <section class="gap-wrapper"></section>
             <section class="create-wrapper wrapper">
                 <form class="create-form form-inline" onsubmit="return onSubmit(this);">
@@ -84,4 +93,5 @@
     </div>
     <script src="../js/talk.js"></script>
 </body>
+
 </html>

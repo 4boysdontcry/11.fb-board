@@ -28,9 +28,6 @@ function onChangeAuth(r) {
 		$('.room-wrapper').find('input[name="writer"]').val(user.displayName);
 		$('.bt-login').css('display', 'none');
 		$('.bt-logout').css('display', 'flex');
-		
-		// $('.create-wrapper img').attr('src', user.photoURL);
-		// $('.create-wrapper input[name="writer"]').val(user.displayName);
 	}
 	else {
 		$('.header-wrapper .photo img').attr('src', '//via.placeholder.com/1x1/333');
@@ -41,8 +38,6 @@ function onChangeAuth(r) {
 		$('.login-wrapper').css('display', 'flex');
 		$('.bt-login').css('display', 'flex');
 		$('.bt-logout').css('display', 'none');
-		// $('.create-wrapper img').attr('src', '//via.placeholder.com/1x1/fff');
-		// $('.create-wrapper input[name="writer"]').val('');
 	}
 }
 
@@ -89,7 +84,7 @@ function genTalk(k, v) {
 	html += '<i class="fa fa-caret-left left"></i>';
 	html += '<i class="fa fa-caret-right right"></i>';
 	html += '<div class="content">'+content+'</div>';
-	html += '<div class="date">'+moment(v.createdAt).format('a h:m')+'</div>';
+	html += '<div class="date">'+moment(v.createdAt).format('a hh:mm')+'</div>';
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
@@ -235,5 +230,7 @@ function showTalk(rid) {
 	$('.room-wrapper').css('display', 'none');
 	$('.chat-wrapper .list-wrapper').empty();
 	$('.chat-wrapper').css('display', 'flex');
+	$('.chat-wrapper .create-wrapper img').attr('src', user.photoURL);
+	$('.chat-wrapper .create-wrapper input[name="writer"]').val(user.displayName);
 	talkRef.child(talkKey).on('child_added', onTalkAdded);
 }

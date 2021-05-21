@@ -4,11 +4,13 @@ var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모�
 var db = firebase.database();
 var talkRef = db.ref('root/talk');
 var roomRef = db.ref('root/room');
+var talkKey = null;
 
 var $listWrapper = $('.list-wrapper');
 
 var yoil = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 var prevDate = '';
+
 
 /*************** Auth *****************/
 auth.onAuthStateChanged(onChangeAuth);
@@ -55,7 +57,6 @@ function onLoginGoogle() {
 
 
 /*************** firebase event *****************/
-talkRef.on('child_added', onTalkAdded);
 roomRef.on('child_added', onRoomAdded);
 roomRef.on('child_changed', onRoomChanged);
 roomRef.on('child_removed', onRoomRemoved);
@@ -106,7 +107,7 @@ function onSubmit(f) {
 			content: $(f.content).val(),
 			createdAt: new Date().getTime()
 		}
-		ref.push(data);
+		talkRef.child(talkKey).push(data);
 		$(f.content).val('');
 	}
 	$(f.content).focus();
@@ -151,6 +152,28 @@ function onRoomDelete(el){
 	}
 }
 
+function onRoomEnter(f) {
+	var key = f.key.value;
+	roomRef.child(key).once('value')
+	.then(function(r) {
+		if(r.val().roompw !== '') { // 비공개방
+			if(r.val().roompw === f.roompw.value.trim()) { // 패스워드 일치
+				showTalk(r.val().rid);
+			}
+			else { // 패스위드 불일치
+				alert('패스워드가 일치하지 않습니다.');
+				f.roompw.focus();
+			}
+		}
+		else { // 공개방
+			showTalk(r.val().rid);
+		}
+	})
+	.catch(function(err) { console.log(err) });
+
+	return false;
+}
+
 function onRoomAdded(v) {
 	genRoom(v.key, v.val());
 }
@@ -185,7 +208,7 @@ function genRoom(k, v, isChange) {
 			html += '<button class="btn btn-sm btn-success">';
 			html += '<i class="bt-update fa fa-save"></i> 수정';
 			html += '</button> ';
-			html += '<button type="button" class="btn btn-sm btn-danger" onclick="onRoomDelete(this)">';
+			html += '<button type="button" class="btn btn-sm btn-danger" onclick="onRoomDelete(this);">';
 			html += '<i class="bt-update fa fa-times"></i> 삭제';
 			html += '</button>';
 			html += '</div>';
@@ -196,13 +219,21 @@ function genRoom(k, v, isChange) {
 		html += '<h4 class="writer">'+v.writer+'</h4>';
 		html += '<div class="date mb-4">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
 	}
-	html += '<form class="enter-wrap form-inline" onSubmit="return onEnter">';
+	html += '<form class="enter-wrap form-inline" onsubmit="return onRoomEnter(this);">';
 	if(v.roompw) 
 		html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">&nbsp;';
-	html += '<input type="hidden" name="rid" value="'+v.rid+'" onsubmit="return onRoomEnter(this);">';
-	html += '<button class="btn btn-primary">방 입장</button>';
-	html += '</form>';
-	html += '</div>';
+		html += '<input type="hidden" name="key" value="'+k+'"">';
+		html += '<button class="btn btn-primary">방 입장</button>';
+		html += '</form>';
+		html += '</div>';
 	if(isChange) return html;
 	else $('.room-wrap.create').after(html);
+}
+
+function showTalk(rid) {
+	talkKey = rid;
+	$('.room-wrapper').css('display', 'none');
+	$('.chat-wrapper .list-wrapper').empty();
+	$('.chat-wrapper').css('display', 'flex');
+	talkRef.child(talkKey).on('child_added', onTalkAdded);
 }

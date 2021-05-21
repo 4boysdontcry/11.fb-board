@@ -2,14 +2,15 @@
 var auth = firebase.auth();	//firebase의 auth(인증)모듈을 불러온다.
 var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모듈을 불러온다.
 var db = firebase.database();
-var ref = db.ref('root/talk');
+var talkRef = db.ref('root/talk');
+var roomRef = db.ref('root/room');
 
 var $listWrapper = $('.list-wrapper');
 
 var yoil = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 var prevDate = '';
 
-/*************** 인증 *****************/
+/*************** Auth *****************/
 auth.onAuthStateChanged(onChangeAuth);
 $('.bt-login').click(onLoginGoogle);
 $('.bt-logout').click(onLogOut);
@@ -22,6 +23,7 @@ function onChangeAuth(r) {
 		$('.header-wrapper .logo i').css('display', 'none');
 		$('.room-wrapper').css('display', 'flex');
 		$('.login-wrapper').css('display', 'none');
+		$('.room-wrapper').find('input[name="writer"]').val(user.displayName);
 		$('.bt-login').css('display', 'none');
 		$('.bt-logout').css('display', 'flex');
 		
@@ -33,6 +35,7 @@ function onChangeAuth(r) {
 		$('.header-wrapper .info-wrap').css('display', 'none');
 		$('.header-wrapper .logo i').css('display', 'inline-block');
 		$('.room-wrapper').css('display', 'none');
+		$('.room-wrapper').find('input[name="writer"]').val('');
 		$('.login-wrapper').css('display', 'flex');
 		$('.bt-login').css('display', 'flex');
 		$('.bt-logout').css('display', 'none');
@@ -49,14 +52,20 @@ function onLoginGoogle() {
 	auth.signInWithPopup(googleAuth);
 }
 
-/*************** 데이터  *****************/
-ref.orderByChild('createdAt').on('child_added', onAdded);
 
-function onAdded(r) {
-	genHTML(r.key, r.val());
+
+/*************** firebase event *****************/
+talkRef.on('child_added', onTalkAdded);
+roomRef.on('child_added', onRoomAdded);
+
+
+
+/*************** talk *****************/
+function onTalkAdded(r) {
+	genTalk(r.key, r.val());
 }
 
-function genHTML(k, v) {
+function genTalk(k, v) {
 	var content = v.content.replace(URLPattern, URLReplace);
 	var html = '';
 	if(prevDate !== moment(v.createdAt).format('YYYYMMDD')) {
@@ -101,3 +110,74 @@ function onSubmit(f) {
 	$(f.content).focus();
 	return false;
 }
+
+/******************** room ***********************/
+function onRoomSubmit(f) {
+	if(f.name.value.trim() === '') {
+		alert('방제목을 입력하셔야 합니다.');
+		f.name.focus();
+		return false;
+	}
+	if(f.writer.value.trim() === '') {
+		alert('방장을 입력하셔야 합니다.');
+		f.writer.focus();
+		return false;
+	}
+	var data = {
+		rid: uuidv4(),		// 방에 대한 고유값
+		uid: user.uid,		// 방장의 id
+		name: f.name.value,
+		writer: f.writer.value,
+		roompw: f.roompw.value,
+		createdAt: new Date().getTime(),
+	}
+	roomRef.push(data);
+	f.name.value = '';
+	f.writer.value = '';
+	f.roompw.value = '';
+	return false;
+}
+
+function onRoomAdded(v) {
+	genRoom(v.key, v.val());
+}
+
+function genRoom(k, v) {
+	var html = '';
+	html += '<div class="room-wrap">';
+	html += '<h3 class="name">';
+	if(user.uid === v.uid)
+		html += '<input type="text" name="name" class="form-control" placeholder="방제목" value="'+v.name+'">';
+	else 
+		html += v.name ;
+	html += '</h3>';
+	html += '<h4 class="writer form-inline">';
+	if(user.uid === v.uid) {
+		html += '방장이름: &nbsp;';
+		html += '<input type="text" name="writer" class="form-control" placeholder="방장" value="'+v.writer+'">'; 
+	}
+	else
+		html += v.writer;
+	html += '</h4>';
+	html += '<div class="roompw form-inline">';
+	if(user.uid === v.uid) {
+		html += '패스워드: &nbsp;';
+		html += '<input type="password" name="roompw" class="form-control w-50" placeholder="비밀번호">';
+	}
+	html += '</div>';
+	html += '<div class="date">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
+	if(user.uid === v.uid) {
+		html += '<div class="btn-wrap">';
+		html += '<button class="btn btn-sm btn-primary"><i class="bt-update fa fa-save"></i></button> ';
+		html += '<button class="btn btn-sm btn-danger"><i class="bt-delete fa fa-times"></i></button>';
+		html += '</div>';
+	}
+	html += '<div class="enter-wrap form-inline">';
+	if(v.roompw) 
+		html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">';
+	html += '<button type="button" class="btn btn-primary">방 입장</button>';
+	html += '<div>';
+	html += '</div>';
+	$('.room-wrap.create').after(html);
+}
+

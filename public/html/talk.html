@@ -21,6 +21,7 @@
     <script src="../js/lodash.min.js"></script>
     <script src="../js/moment.min.js"></script>
     <script src="../js/minified.js"></script>
+    <script src="../js/util.js"></script>
 </head>
 <body>
     <div class="container-wrapper">
@@ -44,69 +45,28 @@
             <h2 class="title">Firebase를 활용한 채팅앱</h2>
             <h3 class="title">Firebase Auth/DataBase/Intersection Observer</h3>
         </section>
-        <section class="list-wrapper wrapper">
-            <div class="talk-wrapper">
-                <div class="icon">
-                    <!-- <img src="//via.placeholder.com/1x1/f5cd98c2" alt="icon"> -->
-                    <img src="https://lh3.googleusercontent.com/a-/AOh14GjS9DHjDpqTmVZfQmcIDvBW0u8SsgEm8zbgwYVJPA=s96-c" class="w-100" alt="icon">
-                </div>
-                <div class="talk-wrap">
-                    <div class="writer">henry</div>
-                    <div class="content-wrap">
-                        <i class="fa fa-caret-left left"></i>
-                        <i class="fa fa-caret-right right"></i>
-                        <div class="content">나오나?</div>
-                    </div>
-                    <div class="date">pm 3:14</div>
-                </div>
-            </div>
-            <div class="talk-wrapper me">
-                <div class="icon">
-                    <!-- <img src="//via.placeholder.com/1x1/f5cd98c2" alt="icon"> -->
-                    <img src="https://lh3.googleusercontent.com/a-/AOh14GjS9DHjDpqTmVZfQmcIDvBW0u8SsgEm8zbgwYVJPA=s96-c" class="w-100" alt="icon">
-                </div>
-                <div class="talk-wrap">
-                    <div class="writer">henry</div>
-                    <div class="content-wrap">
-                        <i class="fa fa-caret-left left"></i>
-                        <i class="fa fa-caret-right right"></i>
-                        <div class="content">나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나? 나오나?</div>
-                    </div>
-                    <div class="date">pm 3:14</div>
-                </div>
-            </div>
-        </section>
-        <section class="gap-wrapper">
-            <div class="gap-wrap">
+        <section class="login-wrapper">
                 <button class="btn btn-danger bt-login">
                     <i class="fab fa-google"></i> 로그인
                 </button>
                 <div>로그인 후 이용 가능합니다.</div>
-            </div>
         </section>
-        <section class="create-wrapper wrapper">
-            <form class="create-form form-inline" onsubmit="return onSubmit(this);">
-                <div class="icon">
-                    <img src="//via.placeholder.com/1x1/fff" alt="icon" class="w-100">
-                </div>
-                <input type="text" name="writer" class="form-control" placeholder="작성자" readonly disabled>
-                <input type="text" name="content" class="form-control" placeholder="대화 입력" autofocus>
-                <button class="bt-create btn btn-danger">전송</button>
-            </form>
+        <section class="room-wrapper">
+            <h1>톡방</h1>
         </section>
-        <!-- <nav class="pager-wrapper">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link bi-chevron-bar-left" href="#"></a></li>
-                <li class="page-item"><a class="page-link bi-chevron-double-left" href="#"></a></li>
-                <li class="page-item"><a class="page-link bi-chevron-left" href="#"></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link bi-chevron-right" href="#"></a></li>
-                <li class="page-item"><a class="page-link bi-chevron-double-right" href="#"></a></li>
-                <li class="page-item"><a class="page-link bi-chevron-bar-right" href="#"></a></li>
-            </ul>
-        </nav> -->
+        <section class="chat-wrapper">
+            <section class="list-wrapper wrapper"><!-- data import --></section>
+            <section class="gap-wrapper"></section>
+            <section class="create-wrapper wrapper">
+                <form class="create-form form-inline" onsubmit="return onSubmit(this);">
+                    <div class="icon">
+                        <img src="//via.placeholder.com/1x1/fff" alt="icon" class="w-100">
+                    </div>
+                    <input type="text" name="content" class="form-control" placeholder="대화 입력" autofocus>
+                    <button class="bt-create btn btn-danger">전송</button>
+                </form>
+            </section>
+        </section>
     </div>
     <script src="../js/talk.js"></script>
 </body>

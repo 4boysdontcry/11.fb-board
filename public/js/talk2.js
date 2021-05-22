@@ -197,47 +197,36 @@ function onRoomRemoved(v) {
 
 function genRoom(k, v, isChange) {
 	var html = '';
+	html += '<div class="room-wrapper">';
 	html += '<div class="room-wrap '+(v.roompw !== '' ? 'secure' : '')+'" id="'+k+'">';
-	if(user.uid === v.uid) {
-			html += '<form class="create" onsubmit="return onRoomSubmit(this);">';
-			html += '<input type="hidden" name="key" value="'+k+'">';
-			html += '<div class="name">';
-			html += '<input type="text" class="form-control" name="name" placeholder="방제목" value="'+v.name+'">';
-			html += '</div>';
-			html += '<div class="writer form-inline">';
-			html += '<input type="text" class="form-control" name="writer" placeholder="방장이름" value="'+v.writer+'">';
-			html += '<input type="password" class="form-control" name="roompw" placeholder="수정 할 비밀번호">';
-			html += '<div class="text-danger">';
-			html += '* 비밀번호 입력시 비밀번호가 수정됩니다.<br>';
-			html += '* 미 입력시 오픈채팅으로 변경됩니다.';
-			html += '</div>';
-			html += '</div>';
-			html += '<div class="btn-wrap">';
-			html += '<button class="btn btn-sm btn-success">';
-			html += '<i class="bt-update fa fa-save"></i> 수정';
-			html += '</button> ';
-			html += '<button type="button" class="btn btn-sm btn-danger" onclick="onRoomDelete(this);">';
-			html += '<i class="bt-update fa fa-times"></i> 삭제';
-			html += '</button>';
-			html += '</div>';
-			html += '</form>';
+	html += '<div class="title-wrap"> ';
+	html += '<h3 class="name">'+v.name+'</h3>';
+	if(user.uid === v.uid){
+		html += '<button class="btn btn-sm btn-success bt-modi">';
+		html += '<i class="bt-update fa fa-save"></i> 수정';
+		html += '</button> ';
 	}
-	else {
-		html += '<h3 class="name">'+v.name+'</h3>';
-		html += '<h4 class="writer">'+v.writer+'</h4>';
-		html += '<div class="date mb-4">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
-	}
+	html += '</div> ';
+	html += '<h4 class="writer">'+v.writer+'</h4>';
+	html += '<div class="date mb-4">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
 	html += '<form class="enter-wrap form-inline" onsubmit="return onRoomEnter(this);">';
 	if(v.roompw) 
-		html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">&nbsp;';
-		html += '<input type="hidden" name="key" value="'+k+'"">';
-		html += '<button class="btn btn-primary">방 입장</button>';
-		html += '</form>';
-		html += '</div>';
+	html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">&nbsp;';
+	html += '<input type="hidden" name="key" value="'+k+'"">';
+	html += '<button class="btn btn-primary">방 입장</button>';
+	html += '</form>';
+	html += '</div>';
+	html += '</div>';
 	if(isChange) return html;
 	else $('.room-wrap.create').after(html);
-}
+			}
 
+		function genModi(){
+			$('.room-wrapper').css('background-color', 'rgba(0, 0, 0, .7)')
+			
+		}
+	
+	
 function showTalk(rid) {
 	talkKey = rid;
 	$('.room-wrapper').css('display', 'none');

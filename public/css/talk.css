@@ -43,7 +43,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** chat-wrapper *********************/
-.chat-wrapper {display: none; flex-direction: column; align-items: center; width: 100%;  overflow: hidden; justify-content: stretch; flex-grow: 1;}
+.chat-wrapper {display: none; flex-direction: column; align-items: center; width: 100%;  overflow: hidden; justify-content: stretch;}
 
 
 /********************** create-wrapper *********************/
@@ -58,7 +58,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 
 /********************** list-wrapper *********************/
-.chat-wrapper .list-wrapper {width: 96%; flex-grow: 1; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em; overflow-y: auto;}
+.chat-wrapper .list-wrapper {width: 96%; flex-grow: 1; border: 2px solid #333; background-color: #f5e9f3; border-radius: 8px; padding: .5em; overflow-y: auto; min-height: 300px;}
 .chat-wrapper .list-wrapper .line {display: flex; align-items: center; margin: 2em 0; color: #555;}
 .chat-wrapper .list-wrapper .line > span {padding: 0 .5em;}
 .chat-wrapper .list-wrapper .line::before {display: block; content: ''; height: 2px; background-color: #999; flex-grow: 1;}
@@ -90,21 +90,19 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 /********************** room-wrapper *********************/
 .room-wrapper {display: none; flex-grow: 1; width: 100%; padding: 1em; align-items: stretch; flex-wrap: wrap; align-content: flex-start; overflow-y: auto;}
-.room-wrapper ::placeholder {color: #ddd;}s
+.room-wrapper ::placeholder {color: #ddd;}
 .room-wrapper .room-wrap {width: 23%; margin: 1%; padding: 1em; border: 3px solid pink; background-color: #fdebee; border-radius: 10px;}
-.room-wrapper .room-wrap .title-wrap {display: flex; justify-content: space-between; align-items: center;}
-
 .room-wrapper .room-wrap h3.title {text-align: center; margin: .325em 0 .75em 0; font-size: 1.325em; font-weight: bold; color:#5c2452;}
 .room-wrapper .room-wrap h3.name {font-size: 1.325em; font-weight: bold; margin-bottom: .5em; text-decoration: underline;}
 .room-wrapper .room-wrap h4.writer {font-size: 1.125em; margin-bottom: .5em;}
 .room-wrapper .room-wrap .date {color: #777; margin-bottom: .5em;}
 .room-wrapper .room-wrap .btn {padding: 3px 8px 1px 8px;}
-.room-wrapper .room-wrap .enter-wrap {justify-content: center; margin-top: .5em; padding-top: 1em; border-top: 2px solid #dfc1da;}
+.room-wrapper .room-wrap .enter-wrap {justify-content: center;}
 
 .room-wrapper .room-wrap.create {background-color: #ddd; border: 3px solid #a0a0a0;}
 .room-wrapper .room-wrap.secure {background-color: #c5afe9; border: 3px solid #a55fa9;}
 
-.room-wrapper .room-choice {text-align: center; padding: .5em 0;}
+.room-wrapper .room-choice {text-align: center; margin: .5em 0;}
 .room-wrapper .create input[type="text"] {padding: .125em .5em; font-size: .875em}
 .room-wrapper .create input[type="password"] {padding: .125em .5em; font-size: .875em}
 .room-wrapper .create > div {margin-bottom: .25em;}

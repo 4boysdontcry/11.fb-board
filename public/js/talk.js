@@ -61,12 +61,15 @@ roomRef.on('child_removed', onRoomRemoved);
 
 /*************** talk *****************/
 function onSecretChanged(el){
-	if(el.value === 'open'){
-		$(el.form.roompw).hide();
+	// if(el.value === 'open') $(el.form.roompw).hide();		// radio로 핸들링하는 경우
+	// else $(el.form.roompw).show();
+	// console.log(el.checked)
+	// console.log($(el).is(':checked'))
+	if(el.checked){		// checkbox로 핸들링하는 경우
+		$(el.form.roompw).show();
 	}
 	else{
-		$(el.form.roompw).show();
-
+		$(el.form.roompw).hide();
 	}
 }
 
@@ -133,10 +136,19 @@ function onRoomSubmit(f) {
 		f.writer.focus();
 		return false;
 	}
-	var data = { name: f.name.value, writer: f.writer.value, roompw: f.roompw.value }
+	if(f.secret.checked && f.roompw.value === '') {
+		alert('사용할 비밀번호를 입력하세요.');
+		f.roompw.focus();
+		return false;
+	}
+	var data = {
+		name: f.name.value.trim(),
+		writer: f.writer.value.trim(),
+		roompw: f.roompw.value.trim(),
+		secret: f.secret.checked ? true : false
+	}
 	if(f.key && f.key.value) { // 수정
 		data.updatedAt = new Date().getTime();
-		if(f.roompw.value.trim() !== '') data.roompw.value = f.roompw.value;
 		roomRef.child(f.key.value).update(data);
 		alert('방 정보가 변경되었습니다.');
 	}
@@ -175,7 +187,7 @@ function onRoomEnter(f) {
 	roomRef.child(key).off();
 	roomRef.child(key).get()
 	.then(function(r) {
-		if(r.val().roompw !== '') { // 비공개방
+		if(r.val().secret) { // 비공개방
 			if(r.val().roompw === f.roompw.value.trim()) { // 패스워드 일치
 				showTalk(r.val().rid);
 				f.roompw.value = '';
@@ -190,8 +202,7 @@ function onRoomEnter(f) {
 			showTalk(r.val().rid);
 		}
 	})
-	.catch(function(err) { 
-		f.roompw.value = '';
+	.catch(function(err) {
 		console.log(err) 
 	});
 	
@@ -206,7 +217,7 @@ function onRoomChanged(v) {
 	var html = $(genRoom(v.key, v.val(), true)).html();
 	$('#'+v.key).html(html);
 	$('#'+v.key).removeClass('secure');
-	if(v.val().roompw != '') $('#'+v.key).addClass('secure')
+	if(v.val().secret != '') $('#'+v.key).addClass('secure')
 }
 
 function onRoomRemoved(v) {
@@ -219,17 +230,19 @@ function genRoom(k, v, isChange) {
 	if(user.uid === v.uid) {
 			html += '<form class="create" onsubmit="return onRoomSubmit(this);">';
 			html += '<input type="hidden" name="key" value="'+k+'">';
+			html += '<div class="room-choice text-center">';
+			html += '<label>';
+			html += '<input type="checkbox" name="secret" onchange="onSecretChanged(this);" value="secret" '+(v.secret ? 'checked': '')+'> 비밀방';
+			html += '</label>';
+			html += '</div>';
 			html += '<div class="name">';
 			html += '<input type="text" class="form-control" name="name" placeholder="방제목" value="'+v.name+'">';
 			html += '</div>';
 			html += '<div class="writer form-inline">';
 			html += '<input type="text" class="form-control" name="writer" placeholder="방장이름" value="'+v.writer+'">';
-			html += '<input type="password" class="form-control" name="roompw" placeholder="수정 할 비밀번호">';
-			html += '<div class="text-danger">';
-			html += '* 비밀번호 입력시 비밀번호가 수정됩니다.<br>';
-			html += '* 미 입력시 오픈채팅으로 변경됩니다.';
+			html += '<input type="password" class="form-control" name="roompw" placeholder="비밀번호" value="'+v.roompw+'" style="display: '+(v.secret ? 'inline-block' : 'none')+'">';
 			html += '</div>';
-			html += '</div>';
+			html += '<hr>';
 			html += '<div class="btn-wrap">';
 			html += '<button class="btn btn-sm btn-success">';
 			html += '<i class="bt-update fa fa-save"></i> 수정';
@@ -245,13 +258,14 @@ function genRoom(k, v, isChange) {
 		html += '<h4 class="writer">'+v.writer+'</h4>';
 		html += '<div class="date mb-4">개설: '+moment(v.createdAt).format('YYYY-MM-DD')+'</div>';
 	}
+	html += '<hr>';
 	html += '<form class="enter-wrap form-inline" onsubmit="return onRoomEnter(this);">';
-	if(v.roompw) 
+	if(v.secret) 
 		html += '<input type="password" name="roompw" class="form-control" placeholder="비밀번호">&nbsp;';
-		html += '<input type="hidden" name="key" value="'+k+'"">';
-		html += '<button class="btn btn-primary">방 입장</button>';
-		html += '</form>';
-		html += '</div>';
+	html += '<input type="hidden" name="key" value="'+k+'"">';
+	html += '<button class="btn btn-primary">방 입장</button>';
+	html += '</form>';
+	html += '</div>';
 	if(isChange) return html;
 	else $('.room-wrap.create').after(html);
 }

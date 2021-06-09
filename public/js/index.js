@@ -57,10 +57,8 @@ ref.limitToLast(listCnt).once('value').then(onGetFirst).catch(onError);
 ref.once('value', function(){});
 ref.once('value').then(function(){});
 
-
 ref.on('child_removed', onRemoved);
 ref.on('child_changed', onChanged);
-
 
 $('.bt-login').click(onLoginGoogle);
 $('.bt-logout').click(onLogOut);
@@ -163,10 +161,10 @@ function onTrLeave() {
 	$(this).find('.mask').css('display', 'none');
 }
 
-function onResize() {
-	var wid = $('.list-tb').innerWidth();
-	$('.list-tb .mask').innerWidth(wid);
-}
+// function onResize() {
+// 	var wid = $('.list-tb').innerWidth();
+// 	$('.list-tb .mask').innerWidth(wid);
+// }
 
 function onSubmit(f) {
 	if(f.writer.value.trim() === '') {
